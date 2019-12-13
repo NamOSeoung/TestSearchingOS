@@ -54,7 +54,6 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String getListApi(Locale locale, Model model) {
-		System.out.println("????");
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();

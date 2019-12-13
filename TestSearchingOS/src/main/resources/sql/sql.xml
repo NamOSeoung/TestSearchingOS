@@ -4,8 +4,30 @@
 
 <mapper namespace="sql">
 
+
 <select id="sel" resultType="com.test.search.HomeDto">     <!-- resultType 본인 환경에 맞게 수정 필요 -->
 	SELECT "USER_ID" FROM "GENERAL_USERS_TB"
+</select>
+<select id="selectPlace" resultType="com.test.search.PlaceDto">     <!-- resultType 본인 환경에 맞게 수정 필요 -->
+	SELECT 
+		place_id,
+		place_name,
+		place_address,
+		tel_no,
+		detail_information,
+		open_hours,
+		close_hours,
+		buisness_day,
+		shutdown_flag,
+		category_detail,
+		google_place_id,
+		kakao_place_id,
+		naver_place_id,
+		latitude,
+		longitude 
+		FROM places
+		where 1 = 1
+		place_name like '%' + #{place_name} + '%'
 </select>
 
 </mapper> 
