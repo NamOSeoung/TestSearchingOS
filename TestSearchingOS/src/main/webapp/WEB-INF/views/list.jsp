@@ -26,7 +26,7 @@ function goPlaceDetail(longitude,latitude){
 				</div>
 				<br>
 				${list.category_name} <br>
-				${list.place_name} - ${list.place_address} 
+				${list.place_name} - ${list.address_name} 
 			</td>
 		</c:forEach>
 	</tr>
@@ -38,7 +38,7 @@ function goPlaceDetail(longitude,latitude){
 				</div>
 				<br>
 				${list.category_name} <br>
-				${list.place_name} - ${list.place_address} 
+				${list.place_name} - ${list.address_name} 
 			</td>
 		</c:forEach>
 	</tr>

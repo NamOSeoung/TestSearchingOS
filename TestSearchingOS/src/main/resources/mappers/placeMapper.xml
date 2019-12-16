@@ -75,7 +75,7 @@
 			SELECT 
 				place_id,
 				place_name,
-				place_address,
+				place_address as address_name,
 				tel_no,
 				detail_information,
 				open_hours,

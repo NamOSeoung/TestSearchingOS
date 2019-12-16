@@ -20,7 +20,15 @@ public class PlaceVO {
 	private String longitude;
 	private String category;
 	private String parent_category;
+	
+	public String getAddress_name() {
+		return address_name;
+	}
+	public void setAddress_name(String address_name) {
+		this.address_name = address_name;
+	}
 	private String category_name;
+	private String address_name;
 	
 	public String getCategory_name() {
 		return category_name;

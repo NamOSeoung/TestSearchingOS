@@ -75,7 +75,7 @@
 			SELECT 
 				place_id,
 				place_name,
-				place_address,
+				place_address as address_name,
 				tel_no,
 				detail_information,
 				open_hours,
@@ -94,5 +94,14 @@
 				 (place_name like '%' || #{place_name} || '%'
 				   or place_address like '%' || #{place_name} || '%'
 				 )
+	</select>
+	
+	<!-- 장소 단일 검색 -->
+   <select id="placeUnitSelect" resultType="int" parameterType="com.test.vo.PlaceVO">
+			SELECT 
+				count(*) as cnt
+			FROM places_tb
+			where 1 = 1
+				and place_id = #{place_id}
 	</select>
 </mapper>
