@@ -13,7 +13,6 @@ function goPlaceDetail(longitude,latitude){
 }
 </script>
 <body>
-	<button onclick="goPlaceDetail()">화면전환</button>
 	<form action="/keyword" method="GET">
 		<input type="text" id="place_name" name="place_name" placeholder="검색어를 기입 해 주세요." />
 		<button>검색</button>
