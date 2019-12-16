@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="placeMapper">
+
+	<!--  카테고리 테이더 -->
+   <insert id="catehoryInsert">
+	   INSERT INTO category_tb(    BNO 
+	   					      , TITLE 
+	   					      , CONTENT 
+	   					      , WRITER  )
+	                 VALUES(    2
+	                 		  , #{title}
+	                 		  , #{content}
+	                 		  , #{writer}  )
+   </insert>
+   
+   <!-- 장소데이터 insert -->
+   <insert id="insert" parameterType="com.test.vo.PlaceVO">
+	   INSERT INTO places_tb(    
+	   						     place_id,
+								 place_name,
+								 place_seq,
+								 place_address,
+								 tel_no,
+								 detail_information,
+								 open_hours,
+								 close_hours,
+								 buisness_day,
+								 shutdown_flag,
+								 category_detail,
+								 kakao_place_id,
+								 latitude,
+								 longitude,
+								 add_date,
+								 add_time,
+								 update_date,
+								 update_time,
+								 update_user_id,
+								 delete_flag,
+								 user_id,
+								 parent_category,
+								 category
+	   						)
+	                 VALUES(    
+	                 			#{place_id}
+	                 		  , #{place_name}
+	                 		  , 1
+	                 		  , #{place_address}
+	                 		  , #{tel_no}
+	                 		  , #{detail_information}  
+	                 		  , #{open_hours}  
+	                 		  , #{close_hours}  
+	                 		  , #{buisness_day}  
+	                 		  , 'N'
+	                 		  , #{category_detail}  
+	                 		  , #{kakao_place_id}  
+	                 		  , #{latitude}  
+	                 		  , #{longitude}  
+	                 		  , '20191212'
+	                 		  , '141212'
+	                 		  , '20191212'
+	                 		  , '141212'
+	                 		  , 'nos'  
+	                 		  , 'N'  
+	                 		  , 'nos'
+	                 		  , #{parent_category}
+	                 		  , #{category}
+	                 		  )
+   </insert>
+   
+   <!-- 장소데이터 검색 -->
+   <select id="list" resultType="com.test.vo.PlaceVO" parameterType="com.test.vo.PlaceVO">
+			SELECT 
+				place_id,
+				place_name,
+				place_address,
+				tel_no,
+				detail_information,
+				open_hours,
+				close_hours,
+				buisness_day,
+				shutdown_flag,
+				category_detail as category_name,
+				google_place_id,
+				kakao_place_id,
+				naver_place_id,
+				latitude as y,
+				longitude as x 
+			FROM places_tb
+			where 1 = 1
+				and 
+				 (place_name like '%' || #{place_name} || '%'
+				   or place_address like '%' || #{place_name} || '%'
+				 )
+	</select>
+</mapper>

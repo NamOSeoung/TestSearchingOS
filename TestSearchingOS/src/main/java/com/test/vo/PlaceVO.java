@@ -1,40 +1,55 @@
-package com.test.search;
+package com.test.vo;
 
-import org.springframework.stereotype.Repository;
+import java.util.Date;
 
-@Repository
-public class PlaceDto {
-
+public class PlaceVO {
 	private String place_id;
-	
 	private String place_name;
-	
 	private String place_address;
-	
 	private String tel_no;
-	
 	private String detail_information;
-	
 	private String open_hours;
-	
 	private String close_hours;
-	
 	private String buisness_day;
-	
 	private String shutdown_flag;
-	
 	private String category_detail;
-	
 	private String google_place_id;
-	
 	private String kakao_place_id;
-	
 	private String naver_place_id;
-	
 	private String latitude;
-	
 	private String longitude;
+	private String category;
+	private String parent_category;
+	private String category_name;
 	
+	public String getCategory_name() {
+		return category_name;
+	}
+	public void setCategory_name(String category_name) {
+		this.category_name = category_name;
+	}
+	public String getX() {
+		return x;
+	}
+	public void setX(String x) {
+		this.x = x;
+	}
+	public String getY() {
+		return y;
+	}
+	public void setY(String y) {
+		this.y = y;
+	}
+	private String x;
+	private String y;
+	
+	
+	public String getParent_category() {
+		return parent_category;
+	}
+	public void setParent_category(String parent_category) {
+		this.parent_category = parent_category;
+	}
 	public String getPlace_id() {
 		return place_id;
 	}
@@ -125,7 +140,13 @@ public class PlaceDto {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-
-
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
+	
+	
 }
-

@@ -9,13 +9,13 @@
 </head>
 <script>
 function goPlaceDetail(longitude,latitude){
-	location.href="/search/testjsp/placeDetail.jsp?latitude=" + latitude + "&longitude=" + longitude;
+	location.href="/testjsp/placeDetail.jsp?latitude=" + latitude + "&longitude=" + longitude;
 }
 </script>
 <body>
 	<button onclick="goPlaceDetail()">화면전환</button>
-	<form action="/search/keyword" method="GET">
-		<input type="text" id="keyWord" name="keyWord" placeholder="검색어를 기입 해 주세요." />
+	<form action="/keyword" method="GET">
+		<input type="text" id="place_name" name="place_name" placeholder="검색어를 기입 해 주세요." />
 		<button>검색</button>
 	</form>
 <table style="width:100%; height:500px;">
@@ -27,7 +27,7 @@ function goPlaceDetail(longitude,latitude){
 				</div>
 				<br>
 				${list.category_name} <br>
-				${list.place_name} - ${list.address_name} 
+				${list.place_name} - ${list.place_address} 
 			</td>
 		</c:forEach>
 	</tr>
@@ -39,7 +39,7 @@ function goPlaceDetail(longitude,latitude){
 				</div>
 				<br>
 				${list.category_name} <br>
-				${list.place_name} - ${list.address_name} 
+				${list.place_name} - ${list.place_address} 
 			</td>
 		</c:forEach>
 	</tr>

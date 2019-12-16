@@ -1,4 +1,4 @@
-package com.test.search;
+package com.test.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
