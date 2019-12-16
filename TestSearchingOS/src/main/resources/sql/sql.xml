@@ -5,7 +5,7 @@
 <mapper namespace="sql">
 
 <select id="sel" resultType="com.test.search.HomeDto">     <!-- resultType 본인 환경에 맞게 수정 필요 -->
-	SELECT "USER_ID" FROM "GENERAL_USERS_TB"
+	SELECT user_id FROM "GENERAL_USERS_TB"
 </select>
 
 </mapper> 

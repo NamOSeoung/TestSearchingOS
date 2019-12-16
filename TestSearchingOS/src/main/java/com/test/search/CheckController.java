@@ -4,26 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
- 
-import org.apache.http.HttpResponse;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -34,71 +27,115 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
  
 @Controller
 public class CheckController {
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping(value = "/aaa", method = RequestMethod.GET)
-    public static JsonNode getKakaoAccessToken(String code) {
-		System.out.println("dddddddd");
-        final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
-        String apiKey = "KakaoAK b4bd7e75365a705323622c57d0b7e406";
-        String query = "query=car&sort=accuracy&page=1&size=1";
+	@RequestMapping(value="/apiTest", method = RequestMethod.POST)
+	public String googleTestApi(HttpServletRequest request, Model model) {
+		final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
         RestTemplate restTemplate = new RestTemplate(); 
 
+        String apiKey = "AIzaSyB25Kz59gEEBTq_H-PLkuBfTHnLfMlAFq8";
+        String query = "query=car&sort=accuracy&page=1&size=1";
+        String clientId = "s9hvMAPLynzwOM8jw_I5";//네이버 애플리케이션 클라이언트 아이디값";
+        String clientSecret = "O8zq0mc1MG";//네이버 애플리케이션 클라이언트 시크릿값";
+        
         HttpHeaders headers = new HttpHeaders(); 
         headers.setContentType(MediaType.APPLICATION_JSON);//JSON 변환 
-        headers.set("Authorization", apiKey); //appKey 설정 ,KakaoAK kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk 이 
+        headers.set("Authorization", apiKey); 
         
         HttpEntity entity = new HttpEntity("parameters", headers); 
-
-
-      //String 타입으로 받아오면 JSON 객체 형식으로 넘어옴
-        
-        JSONParser jsonParser = new JSONParser(); 
+		String fields = "photos,formatted_address,name,rating,opening_hours,geometry,place_id";
+		
+		
+		URI url;
+		
+		JSONParser jsonParser = new JSONParser(); 
         JSONObject jsonObject;
+        JSONObject jsonData1 = new JSONObject();	// Find Place API Call
+        JSONObject jsonData2 = new JSONObject();	// Place Detail API Call
+        JSONObject jsonData3 = new JSONObject();	// Youtube Search API Call
+        JSONObject jsonData4 = new JSONObject();	// Naver Blog Search API Call
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
 		try {
-
-	        URI url;
-			try {
-				url = URI.create("https://dapi.kakao.com/v2/search/image?query="+URLEncoder.encode("또보겠지떡볶이", "UTF-8")+"&sort=accuracy&page=1&size=1");
-			      
-		        ResponseEntity response= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-		        
-
-				jsonObject = (JSONObject) jsonParser.parse(response.getBody().toString());
-				//저는 Body 부분만 사용할거라 getBody 후 JSON 타입을 인자로 넘겨주었습니다
-		        //헤더도 필요하면 getBody()는 사용할 필요가 없겠쥬
-		        System.out.println(url.toString());
-		        JSONArray docuArray = (JSONArray) jsonObject.get("documents");
-		        System.out.println(docuArray.toJSONString());
-		        //documents만 뽑아오고  
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-	  
+			String input = URLEncoder.encode(request.getParameter("text"), "UTF-8");
+			String latitude = URLEncoder.encode(request.getParameter("latitude"), "UTF-8");
+			String longitude = URLEncoder.encode(request.getParameter("longitude"), "UTF-8");
+			
+			// Find Place API Call
+			url = URI.create("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="+input+"&inputtype=textquery&language=ko&fields="+fields+"&locationbias=point:"+latitude+","+longitude+"&key="+apiKey);
+	        ResponseEntity response= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);			
+			
+	        jsonObject = (JSONObject) jsonParser.parse(response.getBody().toString());
+	        JSONArray jsonArray = (JSONArray)jsonObject.get("candidates");
+	        jsonData1 = (JSONObject) jsonParser.parse(jsonArray.get(0).toString());
+	        
+			// Place Detail API Call
+			url = URI.create("https://maps.googleapis.com/maps/api/place/details/json?place_id="+jsonData1.get("place_id").toString()+"&language=ko&fields=name,rating,formatted_phone_number,review,opening_hours&key="+apiKey);
+			response= restTemplate.exchange(url, HttpMethod.GET, entity, String.class);	
+			jsonObject = (JSONObject) jsonParser.parse(response.getBody().toString());
+			jsonData2 = (JSONObject)jsonObject.get("result");
+			
+			// Youtube Search API Call
+			//URL url2 = new URL("https://content.googleapis.com/youtube/v3/search?maxResults=20&part=snippet&q="+URLEncoder.encode(jsonData1.get("name").toString(), "UTF-8")+"&regionCode=KR&safeSearch=moderate&type=video&prettyPrint=false&key="+apiKey);
+			URL url2 = new URL("https://content.googleapis.com/youtube/v3/search?maxResults=20&part=snippet&q="+input+"&regionCode=KR&safeSearch=moderate&type=video&prettyPrint=false&key="+apiKey);
+			HttpURLConnection con = (HttpURLConnection) url2.openConnection();
+			con.setRequestMethod("GET");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+			jsonData3 = (JSONObject) jsonParser.parse(br.readLine());
+			br.close();
+			
+			// Naver Blog Search API Call
+			url2 = new URL("https://openapi.naver.com/v1/search/blog?query="+ URLEncoder.encode(jsonData1.get("name").toString()));
+			con = (HttpURLConnection) url2.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("X-Naver-Client-Id", clientId);
+            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);	
+            con.setRequestMethod("GET");
+            int responseCode = con.getResponseCode();
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response2 = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response2.append(inputLine);
+            }
+            jsonData4 = (JSONObject) jsonParser.parse(response2.toString());
+            br.close();
+            
+			System.out.println("Find Place API Call : " + jsonData1.toJSONString());
+			System.out.println("Place Detail API Call : " + jsonData2.toJSONString());
+			System.out.println("Youtube Search API Call : " + jsonData3.toJSONString());
+            System.out.println("Naver Blog Search API Call : " + jsonData4.toJSONString());
+			
+		} catch (UnsupportedEncodingException e) {
+			// TODO: handle exception
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-        
-
-                 
-        //뽑아오기 원하는 Key 이름을 넣어주면 그 value가 반환된다.
-        
-	       JsonNode returnNode = null;
-	 
-
- 
-        return returnNode;
-    }
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("jsonData1", jsonData1);
+		model.addAttribute("jsonData2", jsonData2);
+		model.addAttribute("jsonData3", jsonData3);
+		model.addAttribute("jsonData4", jsonData4);
+		
+		return "apiTest";
+	}
 }
  
 

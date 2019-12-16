@@ -1,5 +1,8 @@
 package com.test.search;
 
+import org.springframework.context.annotation.PropertySource;
+
+@PropertySource("api.properties")
 public class HomeDto {
 
 	private String user_id;
@@ -11,8 +14,6 @@ public class HomeDto {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	
-
 
 }
 

@@ -3,7 +3,7 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>검색결과</title>
+	<title>구글 API 검색</title>
 </head>
 <body>
 

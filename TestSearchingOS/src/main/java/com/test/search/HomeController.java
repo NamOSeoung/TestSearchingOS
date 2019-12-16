@@ -66,4 +66,9 @@ public class HomeController {
 		
 		return "list";
 	}
+	
+	@RequestMapping(value = "/apiTest", method = RequestMethod.GET)
+	public void getApiTest(Locale locale, Model model) {
+		System.out.println("/apiTest");
+	}	
 }
