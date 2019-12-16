@@ -19,12 +19,13 @@ public class PlaceDAOImpl implements PlaceDAO {
 	// 장소 작성
 	@Override
 	public void writeList(List<PlaceVO> placeVO) throws Exception {
-		
+	
 		for (int i = 0; i < placeVO.size(); i ++) {
-			System.out.println(i);
-			sqlSession.insert("placeMapper.insert", placeVO.get(i));
+			int cnt = sqlSession.selectOne("placeMapper.placeUnitSelect", placeVO.get(i));
+			if(cnt <= 0) {
+				sqlSession.insert("placeMapper.insert", placeVO.get(i));
+			}
 		}
-		
 	}
 	
 	// 장소 목록 조회
@@ -32,6 +33,11 @@ public class PlaceDAOImpl implements PlaceDAO {
 	
 		return sqlSession.selectList("placeMapper.list", placeVO);
 
+	}
+	// 장소 단일 조회
+	@Override
+	public String placeUnitSelect(PlaceVO placeVO) throws Exception {
+		return sqlSession.selectOne("placeMapper.placeUnitSelect", placeVO);
 	}
 
 }

@@ -33,4 +33,10 @@ public class PlaceServiceImpl implements PlaceService {
 			return dao.list(placeVO);
 		}
 
+		@Override
+		public String placeUnitSelect(PlaceVO placeVO) throws Exception {
+			
+			return dao.placeUnitSelect(placeVO);
+		}
+
 }

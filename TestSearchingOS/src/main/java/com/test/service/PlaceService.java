@@ -12,4 +12,7 @@ public interface PlaceService {
 	// 게시물 목록 조회
 	public List<PlaceVO> list(PlaceVO placeVO) throws Exception;
 	
+	
+	public String placeUnitSelect (PlaceVO placeVO) throws Exception;
+	
 }
