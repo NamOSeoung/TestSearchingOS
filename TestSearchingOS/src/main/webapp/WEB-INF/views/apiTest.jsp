@@ -35,6 +35,17 @@
 		</c:forEach>
 	</p>
 	
+	<h1>GOOGLE CUSTOM SEARCH</h1>
+	<table>
+		<c:forEach items="${jsonData5['items']}" var="googleSearch">
+			<img id = "first" src="${googleSearch.pagemap.cse_thumbnail[0]['src']}"  width="${googleSearch.pagemap.cse_thumbnail[0]['width']}" height="${googleSearch.pagemap.cse_thumbnail[0]['height']}">
+			<a href="${googleSearch.link}">
+				<p>TITLE : ${googleSearch.pagemap.metatags[0]['og:title']} (${googleSearch.displayLink})</p>
+			</a>
+			<p>작성자 : ${googleSearch.pagemap.metatags[0]['naverblog:nickname']}</p>
+		</c:forEach>
+	</table>
+	
 	<h1>NAVER BLOG</h1>
 	<p>
 		<c:forEach items="${jsonData4['items']}" var="naverBlog">
