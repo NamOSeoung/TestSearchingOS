@@ -3,13 +3,9 @@
 <%@ page session="false" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>구글 API 검색</title>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
 
-<P>   ID is ${ID}.  </P>
 </body>
 </html>
