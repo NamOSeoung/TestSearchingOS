@@ -11,7 +11,7 @@
 function goPlaceDetail(longitude,latitude){
 	location.href="/testjsp/placeDetail.jsp?latitude=" + latitude + "&longitude=" + longitude;
 }
-</script>
+</script> 
 <body>
 	<form action="/keyword" method="GET">
 		<input type="text" id="place_name" name="place_name" placeholder="검색어를 기입 해 주세요." />

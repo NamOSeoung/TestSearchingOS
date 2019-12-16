@@ -12,7 +12,7 @@ function goPlaceDetail(){
 	location.href="/search/testjsp/placeDetail.jsp?latitude=22&longitude=33";
 }
 </script>
-<body>
+<body> 
 	<button onclick="goPlaceDetail()">화면전환</button>
 	<form action="/keyword" method="GET">
 		<input type="text" id="place_name" name="place_name" placeholder="검색어를 기입 해 주세요." />
