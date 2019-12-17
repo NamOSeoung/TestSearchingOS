@@ -15,6 +15,7 @@ function goPlaceDetail(){
 <body> 
 	<form action="/keyword" method="GET">
 		<input type="text" id="place_name" name="place_name" placeholder="검색어를 기입 해 주세요." />
+		<input type="text" id="place_id" name="place_id" value="실대실대실대" />
 		<button>검색</button>
 	</form>
 </body>

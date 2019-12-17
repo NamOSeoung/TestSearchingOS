@@ -2,6 +2,9 @@ package com.test.vo;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class PlaceVO {
 	private String place_id;
 	private String place_name;
@@ -20,6 +23,8 @@ public class PlaceVO {
 	private String longitude;
 	private String category;
 	private String parent_category;
+	private String category_name;
+	private String address_name;
 	
 	public String getAddress_name() {
 		return address_name;
@@ -27,9 +32,6 @@ public class PlaceVO {
 	public void setAddress_name(String address_name) {
 		this.address_name = address_name;
 	}
-	private String category_name;
-	private String address_name;
-	
 	public String getCategory_name() {
 		return category_name;
 	}
@@ -141,7 +143,7 @@ public class PlaceVO {
 	}
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
-	}
+	} 
 	public String getLongitude() {
 		return longitude;
 	}
@@ -154,7 +156,9 @@ public class PlaceVO {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	
-	
+	 
+	public String toStringJson() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
 	
 }

@@ -5,17 +5,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.test.dao.PlaceDAO;
+import com.test.log.LogInfo;
 import com.test.vo.PlaceVO;
 
 
 @Service
-@Transactional
 public class PlaceServiceImpl implements PlaceService {
-
+	
 	@Inject
 	private PlaceDAO dao;
 	
@@ -27,16 +28,16 @@ public class PlaceServiceImpl implements PlaceService {
 	}
 
 	// 장소 목록 조회
-		@Override 
-		public List<PlaceVO> list(PlaceVO placeVO) throws Exception {
+	@Override 
+	@Transactional
+	public List<PlaceVO> list(PlaceVO placeVO) throws Exception {
+		return dao.list(placeVO);
+	}
 
-			return dao.list(placeVO);
-		}
-
-		@Override
-		public String placeUnitSelect(PlaceVO placeVO) throws Exception {
-			
-			return dao.placeUnitSelect(placeVO);
-		}
+	@Override
+	@Transactional
+	public int placeUnitSelect(PlaceVO placeVO) throws Exception {
+		return dao.placeUnitSelect(placeVO);
+	}
 
 }

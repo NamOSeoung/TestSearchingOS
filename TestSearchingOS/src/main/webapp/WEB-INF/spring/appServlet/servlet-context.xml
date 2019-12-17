@@ -23,7 +23,6 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-     
 	<context:component-scan base-package="com.test.controller" />
 	
 		 <!-- context:property-placeholder location="classpath:database.properties"  /!-->

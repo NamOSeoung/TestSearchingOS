@@ -13,6 +13,6 @@ public interface PlaceDAO {
 	public List<PlaceVO> list(PlaceVO placeVO) throws Exception;
 	
 	// 장소 단일 조회
-	public String placeUnitSelect (PlaceVO placeVO) throws Exception;
+	public int placeUnitSelect (PlaceVO placeVO) throws Exception;
 	
 }

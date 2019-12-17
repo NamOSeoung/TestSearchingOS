@@ -13,6 +13,6 @@ public interface PlaceService {
 	public List<PlaceVO> list(PlaceVO placeVO) throws Exception;
 	
 	
-	public String placeUnitSelect (PlaceVO placeVO) throws Exception;
+	public int placeUnitSelect (PlaceVO placeVO) throws Exception;
 	
 }
